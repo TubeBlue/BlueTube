@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blue Tube - Premium Entertainment</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="theme.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <h1 class="logo">BLUE TUBE</h1>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="trending.html">Trending</a></li>
+                    <li><a href="categories.html">Categories</a></li>
+                    <li><a href="mylist.html">My List</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search videos...">
+                    <button id="searchBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </button>
+                </div>
+                <button class="refresh-btn" id="refreshBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="23 4 23 10 17 10"></polyline>
+                        <polyline points="1 20 1 14 7 14"></polyline>
+                        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                    </svg>
+                </button>
+                <button class="theme-toggle-btn" id="themeToggle" title="Toggle Theme">
+                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Loading Spinner -->
+        <div class="loading" id="loadingSpinner">
+            <div class="spinner"></div>
+            <p>Loading content...</p>
+        </div>
+
+        <!-- Video Rows -->
+        <div id="videoContainer">
+            <!-- Video rows will be dynamically inserted here -->
+        </div>
+    </main>
+
+    <!-- Video Modal -->
+    <div class="modal" id="videoModal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <div class="modal-video" id="modalVideo">
+                <!-- Video iframe will be inserted here -->
+            </div>
+            <div class="modal-info">
+                <h3 class="modal-title" id="modalTitle"></h3>
+                <div class="modal-meta">
+                    <span class="modal-duration" id="modalDuration"></span>
+                    <span class="modal-views" id="modalViews"></span>
+                </div>
+                <p class="modal-description" id="modalDescription"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Age Verification Modal -->
+    <div id="ageVerificationModal" class="age-modal">
+        <div class="age-modal-content">
+            <h2>Age Verification Required</h2>
+            <p>This website contains adult content. You must be 18 years or older to enter.</p>
+            <div class="age-modal-buttons">
+                <button id="ageYesBtn" class="age-btn age-yes">I am 18 or older</button>
+                <button id="ageNoBtn" class="age-btn age-no">I am under 18</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <p>&copy; 2025 Blue Tube. All rights reserved.</p>
+            </div>
+            
+            <div class="footer-section social-media">
+                <h4>Follow Us</h4>
+                <div class="social-links">
+                    <a href="https://www.youtube.com/@draggonestudio" target="_blank" rel="noopener" class="social-icon youtube" title="YouTube">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.instagram.com/draggonestudio/" target="_blank" rel="noopener" class="social-icon instagram" title="Instagram">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                    </a>
+                    <a href="https://x.com/DraggoneStudio/" target="_blank" rel="noopener" class="social-icon twitter" title="X (Twitter)">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <div class="footer-links">
+                    <a href="#" id="dmcaLink">DMCA</a>
+                    <a href="#" id="termsLink">Terms</a>
+                    <a href="#" id="privacyLink">Privacy</a>
+                    <a href="contact.html">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- DMCA Modal -->
+    <div id="dmcaModal" class="info-modal">
+        <div class="info-modal-content">
+            <span class="info-modal-close">&times;</span>
+            <h2>DMCA - Information</h2>
+            <div class="info-modal-text">
+                <p>Pursuant to Title 17, Section 512(c)(2) of the United States Code, if you believe that any of your copyrighted material is being infringed on the Website, we have designated an agent to receive notifications of claimed copyright infringement.</p>
+                <p>Notifications should be e-mailed with Subject 'DMCA' or use Contact Form to notifications.</p>
+                <p>All notifications not relevant to us or ineffective under the law will receive no response or action thereupon. Pursuant to Title 17, Section 512(c)(3) of the United States Code, an effective notification of claimed infringement must be a written communication to our agent that includes substantially the following:</p>
+                <ul>
+                    <li>Identification of the copyrighted work that is believed to be infringed. Please describe the work and, where possible, include a copy or the location (e.g., a URL) of an authorized version of the work</li>
+                    <li>Identification of the material that is believed to be infringing and its location. Please describe the material and provide a URL or any other pertinent information that will allow us to locate the material on the Website</li>
+                    <li>Information that will allow us to contact you, including your address, telephone number and, if available, your e-mail address</li>
+                    <li>A statement that you have a good faith belief that the use of the material complained of is not authorized by you, your agent or the law</li>
+                    <li>A statement that the information in the notification is accurate and that under penalty of perjury that you are the owner or are authorized to act on behalf of the owner of the work that is allegedly infringed</li>
+                    <li>A physical or electronic signature from the copyright holder or an authorized representative</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms & Conditions Modal -->
+    <div id="termsModal" class="info-modal">
+        <div class="info-modal-content">
+            <span class="info-modal-close">&times;</span>
+            <h2>Terms & Conditions</h2>
+            <div class="info-modal-text">
+                <p>These Terms and Conditions constitute a binding agreement between you and the operators of this Website (hereinafter "Website", "We" or "Us") regarding your use of The Website and all other services provided by The Website.</p>
+                <p>Please read the Terms & Conditions carefully. Prior to accessing or using the Website, you must agree to ALL of the conditions in these Terms & Conditions and agree to be bound by the Terms & Conditions. If you do not agree to any provision of the Terms & Conditions, you should not use the Service.</p>
+                <h3>1. Age of Majority</h3>
+                <p>You represent and warrant you are at least 18 or 21 years of age, depending on the age of majority in your jurisdiction, and that you have the legal capacity to enter into this Agreement. If you are not at least 18 or 21 years of age, depending on the age of majority in your jurisdiction, you must exit the Website immediately and may not use or access the Website or print or download any Materials from them.</p>
+                <h3>2. Provision and Modification of the Service</h3>
+                <p>You may, in accordance with the Terms, view content provided through the Service and, to the extent permitted by the Website, download content or portions of content provided by the Service, to a single personal computer or other storage device. You may not otherwise copy, distribute, or perform the content of the Service, or create derivative works using that content.</p>
+                <h3>3. Access to, Limited License, and Interference with Website</h3>
+                <p>To access the Website or some of the resources it has to offer, you may be asked to provide certain registration details or other information. It is a condition of your use of this Website that all information you provide will be correct, current, and complete.</p>
+                <h3>4. Your Conduct and Your Use of the Service</h3>
+                <p>The Website Service and all of its components are intended only for adults who may legally access and use them. The Service provides access to sexually explicit material.</p>
+                <h3>5. Copyright</h3>
+                <p>The Website respects the intellectual property rights of others. We prohibit users from uploading, posting or otherwise transmitting materials that violate the intellectual property rights of others.</p>
+                <h3>6. Privacy</h3>
+                <p>As a condition of using the Service, you agree to the terms of the most recent version the Website's Privacy Policy.</p>
+                <h3>7. Disclaimer of Warranties</h3>
+                <p>You expressly understand and agree that your use of the service is at your sole risk. The service is provided on an "AS IS" and "AS AVAILABLE" basis.</p>
+                <h3>8. Limitation of Liability</h3>
+                <p>You expressly understand and agree that the Website shall not be liable for any direct, indirect, incidental, special, consequential or exemplary damages.</p>
+                <h3>9. Indemnification</h3>
+                <p>You agree to hold harmless and indemnify the Website, and its subsidiaries, affiliates, officers, agents, and employees from and against any third-party claim arising from or in any way related to your use of the Service.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="info-modal">
+        <div class="info-modal-content">
+            <span class="info-modal-close">&times;</span>
+            <h2>Privacy Policy</h2>
+            <div class="info-modal-text">
+                <p><strong>Last Updated: May 24, 2018</strong></p>
+                
+                <h3>Introduction</h3>
+                <p>Please read this privacy policy carefully, as your access to our Website signifies that you have read, understand and agree with all terms of this privacy policy. If you do not agree with any part of this privacy policy or our terms, please do not access or continue to use our Website or submit your personal data. We respect your privacy and we are committed to protecting your personal information.</p>
+                <p>If you have any questions about our privacy, please contact us directly via contact form.</p>
+                
+                <h3>Information We Collect</h3>
+                <p>We collect, process and store personal data to the extent that it is necessary to provide users with our service. This privacy policy applies to information that we collect:</p>
+                <ul>
+                    <li>On this Website</li>
+                    <li>In e-mails, messages and other communications between you and this Website</li>
+                    <li>When you interact with our advertising on third-party websites and networks</li>
+                </ul>
+                
+                <h3>Personal Information that We Collect</h3>
+                <p><strong>Members:</strong> Users who interact with us through registration. Members need to provide us with a valid e-mail address and username.</p>
+                <p><strong>Browsers:</strong> Users who are not registered. We collect only Browser data through cookies, Google Analytics, IP Addresses and Referral URLs.</p>
+                
+                <h3>How We Collect Information</h3>
+                <p><strong>Passive Collection:</strong> We use cookies to collect information about you to improve your experience on the Site.</p>
+                <p><strong>Active Collection:</strong> We collect your information when you fill in registration forms to gain Membership on our Site.</p>
+                
+                <h3>How We Use Your Personal Data</h3>
+                <p>We use your personal data for:</p>
+                <ul>
+                    <li>Provision of services and customer management</li>
+                    <li>Configure content and analytics</li>
+                    <li>Functionality and security</li>
+                    <li>Compliance with legal obligations</li>
+                </ul>
+                
+                <h3>Your Rights</h3>
+                <p>You have the right to:</p>
+                <ul>
+                    <li>Access your personal information</li>
+                    <li>Correct inaccurate personal information</li>
+                    <li>Delete your personal information</li>
+                    <li>Object to the use of your personal information</li>
+                </ul>
+                
+                <h3>Data Protection</h3>
+                <p>We take security measures to protect your Personal Data from disclosure and unauthorized access. Only authorized employees can access Personal Information for authorized business functions.</p>
+                
+                <h3>Policy Towards Minors</h3>
+                <p>Our Website is not directed to persons under the age of 18 and we do not knowingly collect Personal Information from minors.</p>
+                
+                <h3>Contact Information</h3>
+                <p>If you have any questions about this privacy policy, please contact us through our contact form.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2257 Statement Modal -->
+    <div id="statement2257Modal" class="info-modal">
+        <div class="info-modal-content">
+            <span class="info-modal-close">&times;</span>
+            <h2>18 USC 2257 Statement</h2>
+            <div class="info-modal-text">
+                <p>All models, actors, actresses and other persons that appear in any visual depiction of actual sexually explicit conduct appearing or otherwise contained in this Website were over the age of eighteen years at the time of the creation of such depictions.</p>
+                
+                <p>All other visual depictions displayed on this Website are exempt from the provision of 18 USC 2257 Statement and 28 C.F.R. 75 because said visual depictions do not consist of depictions of conduct as specifically listed in 18 USC 2257 Statement (2) (A) through (D), but are merely depictions of non-sexually explicit nudity, or are depictions of simulated sexual conduct, or are otherwise exempt because the visual depictions were created prior to July 3, 1995.</p>
+                
+                <p>With respect to all visual depictions displayed on this website, whether of actual sexually explicit conduct, simulated sexual content or otherwise, all persons in said visual depictions were at least 18 years of age when said visual depictions were created.</p>
+                
+                <p>The owners and operators of this Website are not the primary producer (as that term is defined in 18 USC 2257 Statement) of any of the visual content contained in the Website.</p>
+                
+                <p><strong>Please use Contact Form to report abuse about inappropriate content.</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Parental Controls Modal -->
+    <div id="parentalModal" class="info-modal">
+        <div class="info-modal-content">
+            <span class="info-modal-close">&times;</span>
+            <h2>Parental Controls</h2>
+            <div class="info-modal-text">
+                <p><strong>Blue Tube is an adults-only website.</strong></p>
+                <p>As is clearly outlined in our Terms, access to our website is strictly limited to those of legal age only. In order to use our website or access any services provided by the Company, a User must have attained the age of majority in a User's jurisdiction. We also specifically disclaim any responsibility or liability for any misrepresentations regarding a User's age.</p>
+                
+                <p>Users should also implement parental control protections (PC hardware, software, or filtering services), to help limit minors' access to harmful material. We have a zero tolerance policy for pornographic material involving minors and regarding pedophiles or any pedophilic activity.</p>
+                
+                <h3>We Collaborate With:</h3>
+                <ul>
+                    <li><strong>ASACP</strong> - a non-profit organization dedicated to online child protection, battling child exploitation through its CE Reporting Tipline</li>
+                    <li><strong>Revenge Porn Helpline</strong> - a UK service supporting adults experiencing intimate image abuse</li>
+                </ul>
+                
+                <p>As a parent, you are the most effective gatekeeper in preventing age-restricted content from being displayed to your children or wards. We recommend that you implement parental control protections.</p>
+                
+                <h3>Important Tools to Protect Children:</h3>
+                
+                <h4>1. Safe Search Mode in Search Engines</h4>
+                <ul>
+                    <li><strong>Google SafeSearch</strong> - Block adult content in search results</li>
+                    <li><strong>Yahoo SafeSearch</strong> - Filter explicit content</li>
+                    <li><strong>Microsoft SafeSearch</strong> - Block unwanted results in Bing</li>
+                    <li><strong>Yandex Family Search</strong> - Exclude unwanted content</li>
+                </ul>
+                
+                <h4>2. Built-in Parental Controls on Operating Systems</h4>
+                <ul>
+                    <li><strong>Apple (iOS)</strong> - iPhone, iPad, Mac parental controls</li>
+                    <li><strong>Android</strong> - Google Safety Centre protection</li>
+                    <li><strong>Microsoft Windows 10</strong> - Family options and controls</li>
+                    <li><strong>Amazon Kids+</strong> - Comprehensive parental controls</li>
+                </ul>
+                
+                <h4>3. Dedicated Parental Control Software</h4>
+                <ul>
+                    <li>Qustodio</li>
+                    <li>Net Nanny</li>
+                    <li>Norton Family</li>
+                    <li>Mobicip</li>
+                    <li>SentryPC</li>
+                    <li>Bark</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- EU DSA Modal -->
+    <div id="dsaModal" class="info-modal">
+        <div class="info-modal-content">
+            <span class="info-modal-close">&times;</span>
+            <h2>EU Digital Services Act (DSA)</h2>
+            <div class="info-modal-text">
+                <h3>1. Average Monthly Active Recipients (Article 24(2))</h3>
+                <p>Under Article 24(2) of the DSA, providers are required to publish information on the average monthly active recipients of their service (the AMARS) in the European Union.</p>
+                <p>We have calculated the average monthly active recipients of our platform in the European Union. Today we have <strong>1500M AMARS</strong>, calculated as an average over the period of the past six months.</p>
+                
+                <h3>2. Recommendation System (Article 27(1))</h3>
+                <p>Under Article 27(1) of the DSA, we are providing you with information regarding our recommendation system:</p>
+                <ul>
+                    <li>Clicks, views, likes/dislikes, page view history</li>
+                    <li>Frequency of site visits</li>
+                    <li>Comments (if applicable/available)</li>
+                    <li>Type/URL of the visiting page</li>
+                    <li>Page orientation</li>
+                    <li>Selected country and language</li>
+                    <li>Depersonalized user data (behavioral metrics when granted permission)</li>
+                    <li>Tags and categories of the visiting page</li>
+                </ul>
+                
+                <p>To influence the parameters and change the way our recommendation system works, you can simply take various actions on our website as described above, which will affect the content we may recommend to you.</p>
+                
+                <p><strong>Related Videos Feature:</strong> We use a content linking system designed to show content that was categorized as likely related to the content you are currently viewing. If a particular combination of content is viewed by many users, then that content becomes categorized as related.</p>
+                
+                <h3>3. Terms and Conditions Updates (Article 14(2))</h3>
+                <p>Under Article 14(2) of the DSA, we are informing you regarding the changes and updates made to our Terms and Conditions of Use.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cookies Policy Modal -->
+    <div id="cookiesModal" class="info-modal">
+        <div class="info-modal-content">
+            <span class="info-modal-close">&times;</span>
+            <h2>Cookies Policy</h2>
+            <div class="info-modal-text">
+                <p>Cookies are text files that are placed by the browser in the memory of a user's device when our website is visited. Our website uses session cookies and persistent cookies:</p>
+                
+                <h3>Session Cookies</h3>
+                <p>Session cookies expire at the end of a browser session. They only enable us to collect and connect the user's actions during the particular browser session and are deleted when the browser is closed or the user logs off.</p>
+                
+                <h3>Persistent Cookies</h3>
+                <p>Persistent cookies survive a browser session and are stored for a predefined period of time. We are using persistent cookies with the following information and for the following purposes:</p>
+                <ul>
+                    <li>Identifying a registered user</li>
+                    <li>Keeping some search preferences</li>
+                    <li>Keeping the likes of unregistered users</li>
+                    <li>Saving the video player's preferences</li>
+                    <li>Displaying the advertisements</li>
+                    <li>Keeping statistics regarding the speed loading of the pages</li>
+                </ul>
+                
+                <h3>Managing Cookies</h3>
+                <p>The user can disable the cookie function in his browser options. If cookies are disabled the user might not be able to use all the functions and services of the Website.</p>
+                
+                <h3>Third-Party Cookies</h3>
+                <p>Some content or applications, including advertisements, on the Website are served by third parties, including analytics or advertising companies, ad network and servers, content providers and application providers. These third parties may use cookies alone or in conjunction with web beacons or other tracking technologies to collect information about you when you use our Website over which we have no control.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="theme.js"></script>
+    <script src="script.js"></script>
+    
+    <!-- Fallback script to handle loading issues -->
+    <script>
+        // Ensure DOM is fully loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                // Additional initialization if needed
+                console.log('Page fully loaded');
+            });
+        } else {
+            // Additional initialization if needed
+            console.log('Page already loaded');
+        }
+    </script>
+</body>
+</html>
